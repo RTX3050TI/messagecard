@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Carta Especial 💖</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    width:90%;
+    max-width:450px;
+    box-shadow:0 0 25px rgba(0,0,0,0.3);
+    text-align:center;
+}
+
+h2{
+    color:#e91e63;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#e91e63;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#c2185b;
+}
+
+#resultado{
+    margin-top:15px;
+    word-break:break-all;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>💌 Crear Carta Especial</h2>
+
+    <input type="text" id="para" placeholder="Nombre de quien recibe">
+
+    <input type="text" id="de" placeholder="Tu nombre">
+
+    <select id="tipo">
+        <option value="esposa">Esposa ❤️</option>
+        <option value="novia">Novia 💕</option>
+        <option value="amiga">Amiga 🌸</option>
+    </select>
+
+    <label>Fecha de expiración:</label>
+    <input type="date" id="fecha">
+
+    <label>Video de YouTube (opcional):</label>
+    <input type="text" id="youtube" placeholder="Pega el link completo">
+
+    <button onclick="generar()">✨ Generar Enlace ✨</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+function generar(){
+
+    let para = document.getElementById("para").value;
+    let de = document.getElementById("de").value;
+    let tipo = document.getElementById("tipo").value;
+    let fecha = document.getElementById("fecha").value;
+    let youtubeLink = document.getElementById("youtube").value;
+
+    if(!para || !de){
+        alert("Completa los nombres 💖");
+        return;
+    }
+
+    // Extraer ID de YouTube si existe
+    let ytID = "";
+    if(youtubeLink.includes("v=")){
+        ytID = youtubeLink.split("v=")[1].split("&")[0];
+    }
+
+    // Generar código oculto
+    let codigo = Math.random().toString(36).substring(2,10);
+
+    let base = window.location.origin + window.location.pathname.replace("index.html","");
+
+    let enlace = base + "carta.html?"
+        + "para=" + encodeURIComponent(para)
+        + "&de=" + encodeURIComponent(de)
+        + "&tipo=" + tipo
+        + "&exp=" + fecha
+        + "&yt=" + ytID
+        + "&id=" + codigo;
+
+    document.getElementById("resultado").innerHTML =
+        "<p>🔗 Enlace generado:</p>" +
+        "<a href='"+enlace+"' target='_blank'>"+enlace+"</a>";
+}
+</script>
+
+</body>
+</html>
